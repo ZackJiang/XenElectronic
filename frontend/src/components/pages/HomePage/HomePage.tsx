@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
+import { styled } from '@mui/system';
 import { MenuAppBar } from './MenuAppBar';
 import { Products } from './Products';
-import { styled } from '@mui/system';
 
 export interface IProduct {
   id: string;
@@ -23,26 +23,25 @@ export const HomePage: React.FC = () => {
   const productsQuery = React.useCallback(async () => {
     try {
       const response = await fetch(
-        'http://localhost:5000/products'
+        'http://localhost:5000/products',
       );
       if (!response.ok) {
         throw new Error(
-          `This is an HTTP error: The status is ${response.status}`
+          `This is an HTTP error: The status is ${response.status}`,
         );
       }
-      let products = await response.json();
+      const newProducts = await response.json();
 
       setProducts(
-        _.map(products, product => ({
-          id: product._id,
-          name: product.name,
-          category: product.category,
-          description: product.description,
-          price: product.price,
-        }))
+        _.map(newProducts, (newProduct) => ({
+          id: newProduct._id,
+          name: newProduct.name,
+          category: newProduct.category,
+          description: newProduct.description,
+          price: newProduct.price,
+        })),
       );
-    
-    } catch(err) {
+    } catch (err) {
       setProducts([]);
     }
   }, []);
@@ -50,17 +49,16 @@ export const HomePage: React.FC = () => {
   const productsInShoppingCartQuery = React.useCallback(async () => {
     try {
       const response = await fetch(
-        'http://localhost:5000/shopping-cart'
+        'http://localhost:5000/shopping-cart',
       );
       if (!response.ok) {
         throw new Error(
-          `This is an HTTP error: The status is ${response.status}`
+          `This is an HTTP error: The status is ${response.status}`,
         );
       }
-      let products = await response.json();
-      setNumOfProductsInShoppingCart(products.length);
-    
-    } catch(err) {
+      const newProducts = await response.json();
+      setNumOfProductsInShoppingCart(newProducts.length);
+    } catch (err) {
       setNumOfProductsInShoppingCart(0);
     }
   }, []);
@@ -68,14 +66,15 @@ export const HomePage: React.FC = () => {
   React.useEffect(() => {
     productsQuery();
     productsInShoppingCartQuery();
-  }, [productsQuery, productsInShoppingCartQuery])
+  }, [productsQuery, productsInShoppingCartQuery]);
 
-  return <>
-    <MenuAppBar numOfProductsInShoppingCart={numOfProductsInShoppingCart}/>
+  return (
+    <div>
+      <MenuAppBar numOfProductsInShoppingCart={numOfProductsInShoppingCart} />
 
-    <Container>
-      <Products  products={products}/>
-    </Container>
-  </>
-}
-
+      <Container>
+        <Products products={products} />
+      </Container>
+    </div>
+  );
+};

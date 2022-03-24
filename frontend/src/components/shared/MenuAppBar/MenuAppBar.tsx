@@ -1,3 +1,4 @@
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,8 +12,8 @@ interface IMenuAppBarProps {
   path: string;
 }
 
-export const MenuAppBar: React.FC<IMenuAppBarProps> = (props) => {
-  let history = useHistory();
+export const MenuAppBar: React.FC<IMenuAppBarProps> = ({ path, title }) => {
+  const history = useHistory();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -23,18 +24,16 @@ export const MenuAppBar: React.FC<IMenuAppBarProps> = (props) => {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={()=>{history.push(props.path)}}
+              onClick={() => history.push(path)}
               color="inherit"
             >
               <ArrowBackIcon />
             </IconButton>
 
-            {props.title}
+            {title}
           </Typography>
-
-         
         </Toolbar>
       </AppBar>
     </Box>
   );
-}
+};

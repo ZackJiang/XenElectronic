@@ -6,17 +6,14 @@ import { ShoppingCartPage } from './components/pages/ShoppingCartPage/ShoppingCa
 import { CheckoutPage } from './components/pages/CheckoutPage/CheckoutPage';
 import './App.css';
 
-
-const App: React.FC = () => {
- return (
+const App: React.FC = () => (
   <BrowserRouter>
     <Switch>
       <Route path="/" exact component={HomePage} />
       <Route path="/shopping-cart" exact component={ShoppingCartPage} />
       <Route path="/checkout" exact component={CheckoutPage} />
     </Switch>
-    </BrowserRouter>
-  )
-}
+  </BrowserRouter>
+);
 
 export default App;

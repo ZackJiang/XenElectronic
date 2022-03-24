@@ -1,3 +1,4 @@
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,8 +12,8 @@ interface IMenuAppBarProps {
   numOfProductsInShoppingCart: number;
 }
 
-export const MenuAppBar: React.FC<IMenuAppBarProps> = (props) => {
-  let history = useHistory();
+export const MenuAppBar: React.FC<IMenuAppBarProps> = ({ numOfProductsInShoppingCart }) => {
+  const history = useHistory();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -27,10 +28,10 @@ export const MenuAppBar: React.FC<IMenuAppBarProps> = (props) => {
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="true"
-            onClick={()=>{history.push('/shopping-cart')}}
+            onClick={() => history.push('/shopping-cart')}
             color="inherit"
           >
-            <Badge badgeContent={props.numOfProductsInShoppingCart} color="secondary">
+            <Badge badgeContent={numOfProductsInShoppingCart} color="secondary">
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
@@ -38,4 +39,4 @@ export const MenuAppBar: React.FC<IMenuAppBarProps> = (props) => {
       </AppBar>
     </Box>
   );
-}
+};

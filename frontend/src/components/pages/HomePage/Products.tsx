@@ -23,15 +23,15 @@ interface IProductsProps {
   products: IProductProps[];
 }
 
-export const Products: React.FC<IProductsProps> = (props) => {
+export const Products: React.FC<IProductsProps> = ({ products }) => {
   const [catagory, setCatagory] = React.useState('');
   const [catagories, setCatagories] = React.useState<string[]>([]);
 
   React.useEffect(() => {
-    const catagories = new Set(props.products.map(product => product.category));
-    setCatagories(['All', ...Array.from(catagories)]);
+    const newCatagories = new Set(products.map((product) => product.category));
+    setCatagories(['All', ...Array.from(newCatagories)]);
     setCatagory('All');
-  }, [props.products]);
+  }, [products]);
 
   const handleChange = (event: SelectChangeEvent) => {
     setCatagory(event.target.value as string);
@@ -41,10 +41,10 @@ export const Products: React.FC<IProductsProps> = (props) => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productId })
+      body: JSON.stringify({ productId }),
     };
     await fetch('http://localhost:5000/shopping-cart', requestOptions);
-  }
+  };
 
   return (
     <Grid sx={{ flexGrow: 1 }} container spacing={2}>
@@ -60,27 +60,29 @@ export const Products: React.FC<IProductsProps> = (props) => {
               label="Catagory"
               onChange={handleChange}
             >
-              {catagories.map(catagory => {
-                return <MenuItem key={catagory} value={catagory}>{catagory}</MenuItem>
-              })}
+              {catagories.map((element) => (
+                <MenuItem key={element} value={element}>{element}</MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Box>
-        
       </Grid>
 
       <Grid item xs={12}>
         <Grid container spacing={4}>
-          {props.products.filter(product => product.category === catagory || catagory === 'All').map((product) => (
+          {products.filter((product) => product.category === catagory || catagory === 'All').map((product) => (
             <Grid key={product.id} item>
               <Box sx={{ minWidth: 275 }}>
                 <Card variant="outlined">
                   <CardContent>
                     <Typography
-                      sx={{ display: 'flex', justifyContent: 'space-between', fontSize: 14 }} color="text.secondary" gutterBottom>          
-                        <span>{product.name}</span>
-                        
-                        <span>${product.price}</span>
+                      sx={{ display: 'flex', justifyContent: 'space-between', fontSize: 14 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      <span>{product.name}</span>
+
+                      <span>{`$ ${product.price}`}</span>
                     </Typography>
 
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -89,7 +91,7 @@ export const Products: React.FC<IProductsProps> = (props) => {
                   </CardContent>
 
                   <CardActions>
-                    <Button size="small" onClick={()=> handleAddProductToShoppingCart(product.id)}>Add to shoppping cart</Button>
+                    <Button size="small" onClick={() => handleAddProductToShoppingCart(product.id)}>Add to shoppping cart</Button>
                   </CardActions>
                 </Card>
               </Box>
@@ -98,5 +100,5 @@ export const Products: React.FC<IProductsProps> = (props) => {
         </Grid>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
