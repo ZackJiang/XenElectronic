@@ -1,13 +1,22 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import { json } from 'body-parser';
 import { productRouter } from './routes/product';
 import { shoppingCartRouter } from './routes/shoppingCart';
 
 const app = express();
-const port = 3000;
+const port = 5000;
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+  ],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
 app.use(json());
+app.use(cors(corsOptions));
 app.use(productRouter);
 app.use(shoppingCartRouter);
 
