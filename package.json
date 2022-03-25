@@ -1,0 +1,29 @@
+{
+  "name": "xenelectronic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cd backend && mocha --require ts-node/register test/*.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZackJiang/XenElectronic.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZackJiang/XenElectronic/issues"
+  },
+  "homepage": "https://github.com/ZackJiang/XenElectronic#readme",
+  "devDependencies": {
+    "mocha": "^9.2.2",
+    "ts-node-dev": "^1.1.8"
+  },
+  "dependencies": {
+    "pre-push": "^0.1.2"
+  },
+  "pre-push": [
+    "test"
+  ]
+}
